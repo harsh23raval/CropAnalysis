@@ -8,9 +8,8 @@ import flask
 import ipinfo
 import datetime
 import requests
-import zipfile
 import pandas as pd
-from zipfile import ZipFile
+
 global crop_year, area, state_name, district_name, crop, season, rainfall, prediction, __data_columns, __model
 
 app = Flask(__name__)
@@ -166,12 +165,12 @@ def predict():
         d['production_for_graph'] = rst
         #res = dict(zip(lst, rst))
 
-        return jsonify(d)
+    return jsonify(d)
 
 
 if __name__ == "__main__":
     print("Its up and runnning!")
-    app.run(debug=True)
+    app.run()
 
 
 
