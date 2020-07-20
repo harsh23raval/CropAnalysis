@@ -19,7 +19,7 @@ def home():
     return render_template("index.html")
 
 
-@app.route('/yeild_predictor_api',methods=['GET'])
+@app.route('/',methods=['GET'])
 def predict():
     global crop_year, n_crop_year, n_area, crop, district_name
     global prediction
