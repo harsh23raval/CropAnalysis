@@ -20,7 +20,7 @@ def home():
     return render_template("index.html")
 
 
-@app.route('/',methods=['GET'])
+@app.route('/yeild_predictor_api',methods=['GET'])
 def predict():
     global crop_year, n_crop_year, n_area, crop, district_name
     global prediction
@@ -46,9 +46,10 @@ def predict():
         crop = flask.request.args.get('crop')
         season = flask.request.args.get('season')
         #rainfall = flask.request.args.get('rainfall')
-        crop_year = int(2012)
+        crop_year = int(2010)
         n_area = int(area)
 
+        cropp = crop
         access_token = '47d69098973e6d'
         handler = ipinfo.getHandler(access_token)
         details = handler.getDetails()
@@ -115,8 +116,6 @@ def predict():
 
         d["prediction"] = __model.predict([x])[0]
 
-
-        cropp = crop
         dis = district_name
         data = pd.read_excel("newnew_1.xlsx")
         df = pd.DataFrame(data)
@@ -130,6 +129,16 @@ def predict():
                 if pd.isnull(content).sum():
                     data[label + "_missing"] = pd.isnull(content)
                     data[label] = content.fillna(content.median())
+
+        a = df[(df['District_name'] == dis)]
+        k = 0
+        for i in (a['Crop']).iteritems():
+            if str(i[1]) == crop:
+                k = k + 1
+        if k == 0:
+            err = "You cannot find graphs for the crop you requested"
+            d['error'] = err
+
         a = df[(df['Crop'] == cropp) & (df['District_name'] == dis)]
 
         a = a.sort_values(by='Year', ascending=False)
@@ -153,19 +162,16 @@ def predict():
 
         lst = [str(i) for i in b]
         rst = [str(i) for i in pr]
-        res = dict(zip(lst, rst))
+        d['crop_year_for_graph'] = lst
+        d['production_for_graph'] = rst
+        #res = dict(zip(lst, rst))
 
-        return jsonify(res,d)
+        return jsonify(d)
 
-
-        #y = json.dumps(d)
-        #wjdata = json.loads(y)
-        #return redirect("/graph")
-        # return render_template("index.html", your_out=wjdata['prediction'])
 
 if __name__ == "__main__":
     print("Its up and runnning!")
-    app.run()
+    app.run(debug=True)
 
 
 
