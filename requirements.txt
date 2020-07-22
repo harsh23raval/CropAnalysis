@@ -12,5 +12,6 @@ pandas>=0.19
 ipinfo==3.0.0
 datetime==4.3.0
 requests==2.22.0
+pickle==2.3
 
 
