@@ -32,8 +32,8 @@ def predict():
     global wjdata
     d = {}
 
-    with open('yield_june_to_sep_rainfall.pickle', 'rb') as v:
-        __model = pickle.load(v)
+    #with open("yield_june_to_sep_rainfall.pickle", 'rb') as file:
+    __model = pickle.load("yield_june_to_sep_rainfall.pickle")
 
     with open("columns_of_yeild_june_to_sep_rainfall.json", 'r') as f:
         __data_columns = json.load(f)['data_columns']
