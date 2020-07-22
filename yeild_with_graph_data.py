@@ -2,13 +2,14 @@ from flask import request
 from flask import jsonify
 from flask import Flask, url_for, redirect, render_template
 import json
-import pickle
+#import pickle
 import numpy as np
 import flask
 import ipinfo
 import datetime
 import requests
 import pandas as pd
+import pickle5 as pickle
 
 global crop_year, area, state_name, district_name, crop, season, rainfall, prediction, __data_columns, __model
 
